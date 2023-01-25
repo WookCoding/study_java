@@ -6,7 +6,7 @@ public class UserVO {
 	private String userName;
 	private String userPassword;
 	private String userPhone;
-	private String userNickName;
+	private String userNickname;
 	private String userEmail;
 	private String userAddress;
 	private String userBirth;
@@ -14,7 +14,7 @@ public class UserVO {
 	private String userRecommenderId;
 	
 	public UserVO() {;}
-
+	
 	public Long getUserId() {
 		return userId;
 	}
@@ -53,6 +53,14 @@ public class UserVO {
 
 	public void setUserPhone(String userPhone) {
 		this.userPhone = userPhone;
+	}
+
+	public String getUserNickname() {
+		return userNickname;
+	}
+
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
 	}
 
 	public String getUserEmail() {
@@ -95,13 +103,11 @@ public class UserVO {
 		this.userRecommenderId = userRecommenderId;
 	}
 
-	public String getUserNickName() {
-		return userNickName;
+	@Override
+	public String toString() {
+		return "UserVO [userId=" + userId + ", userIdentification=" + userIdentification + ", userName=" + userName
+				+ ", userPassword=" + userPassword + ", userPhone=" + userPhone + ", userNickname=" + userNickname
+				+ ", userEmail=" + userEmail + ", userAddress=" + userAddress + ", userBirth=" + userBirth
+				+ ", userGender=" + userGender + ", userRecommenderId=" + userRecommenderId + "]";
 	}
-
-	public void setUserNickName(String userNickName) {
-		this.userNickName = userNickName;
-	}
-
-	
 }
