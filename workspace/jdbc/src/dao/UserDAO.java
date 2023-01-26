@@ -53,13 +53,12 @@ public class UserDAO {
 	}
 	
 //	회원가입
-	public boolean join(UserVO userVO) {
+	public void join(UserVO userVO) {
 		String query = "INSERT INTO TBL_USER "
 				+ "(USER_ID, USER_IDENTIFICATION, USER_NAME, USER_PASSWORD, USER_PHONE, USER_NICKNAME, "
 				+ "USER_EMAIL, USER_ADDRESS, USER_BIRTH, USER_GENDER, USER_RECOMMENDER_ID) "
 				+ "VALUES(SEQ_USER.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?)";
 		connection = DBConnecter.getConnection();
-		boolean result = false;
 		
 		try {
 			preparedStatement = connection.prepareStatement(query);
@@ -75,7 +74,7 @@ public class UserDAO {
 			preparedStatement.setString(9, userVO.getUserGender());
 			preparedStatement.setString(10, userVO.getUserRecommenderId());
 
-			result = preparedStatement.executeUpdate() == 1;
+			preparedStatement.executeUpdate();
 			
 		} catch (SQLException e) {
 			System.out.println("join(userVO) SQL문 오류");
@@ -95,7 +94,6 @@ public class UserDAO {
 			}
 		}
 		
-		return result;
 	}
 	
 //	로그인
@@ -161,15 +159,14 @@ public class UserDAO {
 	}
 	
 //	회원탈퇴
-	public boolean withdrawal(UserVO userVO) {
+	public void withdrawal(UserVO userVO) {
 		String query = "DELETE FROM TBL_USER WHERE USER_ID = ?";
 		connection = DBConnecter.getConnection();
-		boolean result = false;
 		
 		try {
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setLong(1, userVO.getUserId());
-			result = preparedStatement.executeUpdate() == 1;
+			preparedStatement.executeUpdate();
 			
 		} catch (SQLException e) {
 			System.out.println("withdrawal(UserVO) SQL문 오류");
@@ -188,8 +185,6 @@ public class UserDAO {
 				throw new RuntimeException(e);
 			}
 		}
-	
-		return result;
 	}
 	
 //	아이디 찾기
@@ -229,17 +224,16 @@ public class UserDAO {
 		return result;
 	}
 //	비밀번호 변경
-	public boolean changePw(String userIdentification, String password) {
+	public void changePw(String userIdentification, String password) {
 		String query = "UPDATE TBL_USER SET USER_PASSWORD = ? WHERE USER_IDENTIFICATION = ?";
 		connection = DBConnecter.getConnection();
-		boolean result = false;
 		
 		try {
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, encry(password));
 			preparedStatement.setString(2, userIdentification);
 			
-			result = preparedStatement.executeUpdate() == 1;
+			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("changePw(userVO) SQL문 오류");
 			e.printStackTrace();
@@ -258,7 +252,6 @@ public class UserDAO {
 			}
 		}
 		
-		return result;
 	}
 	
 //	회원정보 수정
@@ -449,7 +442,10 @@ public class UserDAO {
 		String query ="SELECT USER_ID, USER_IDENTIFICATION, USER_NAME, USER_PASSWORD,"
 				+ " USER_PHONE, USER_NICKNAME, USER_EMAIL, USER_ADDRESS, USER_BIRTH, "
 				+ "USER_GENDER, USER_RECOMMENDER_ID "
-				+ "FROM TBL_USER WHERE USER_RECOMMENDER_ID = ? AND USER_ID = ?";
+				+ "FROM TBL_USER WHERE USER_RECOMMENDER_ID = ? AND USER_ID = "
+				+ "("
+				+ "SELECT USER_RECOMMENDER_ID FROM TBL_USER WHREE USER_ID = ?"
+				+ ")";
 		connection = DBConnecter.getConnection();
 		UserVO user = null;
 		try {
@@ -458,8 +454,7 @@ public class UserDAO {
 			preparedStatement.setLong(2, userVO.getUserId());
 			resultSet = preparedStatement.executeQuery();
 			
-			resultSet.next();
-			while(resultSet.next()) {
+			if(resultSet.next()) {
 				user = new UserVO();
 				user.setUserId(resultSet.getLong(1));
 				user.setUserIdentification(resultSet.getString(2));

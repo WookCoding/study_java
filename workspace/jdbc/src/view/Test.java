@@ -9,7 +9,6 @@ public class Test {
 	public static void main(String[] args) {
 		UserDAO userDAO = new UserDAO();
 		UserVO userVO = new UserVO();
-		ArrayList<String> arData = null;
 		
 		userVO.setUserIdentification("hds1242");
 		userVO.setUserName("ȫ�浿");
