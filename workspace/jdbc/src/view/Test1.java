@@ -1,5 +1,6 @@
 package view;
 
+import dao.BoardDAO;
 import dao.UserDAO1;
 import domain.UserVO1;
 
@@ -99,7 +100,47 @@ public class Test1 {
 //      }else {
 //         System.out.println("추천한 사람이 없습니다.");
 //      }
-      
+//      ==========================================================================
+    	      BoardDAO boardDAO = new BoardDAO();
+    	      
+//    	      게시글 추가
+//    	      BoardVO boardVO = new BoardVO();
+//    	      
+//    	      if(userDAO1.login("phgs1234", "7890")) {
+//    	         System.out.println("로그인 성공");
+//    	         System.out.println(UserDAO.userId);
+//    	      }else {
+//    	         System.out.println("로그인 실패");
+//    	      }
+//    	      
+//    	      boardVO.setBoardTitle("알에서 태어나");
+//    	      boardVO.setBoardContent("왕으로 강림하다.");
+//    	      boardVO.setUserId(UserDAO1.userId);
+//    	      
+//    	      boardDAO.insert(boardVO);
+    	      
+//    	      게시글 조회
+//    	      System.out.println(boardDAO.select(1L));
+//    	      BoardDTO boardDTO = boardDAO.select(2L);
+    	      
+//    	      게시글 수정
+//    	      if(UserDAO1.userId == boardDTO.getUserId()) {
+//    	         boardDTO.setBoardTitle("수정된 제목");
+//    	         boardDAO.update(boardDTO.toBoardVO());
+//    	      }else {
+//    	         System.out.println("작성자만 수정이 가능합니다.");
+//    	      }
+    	      
+//    	      게시글 삭제
+//    	      if(UserDAO1.userId == boardDTO.getUserId()) {
+//    	         boardDAO.delete(boardDTO.getBoardId());
+//    	      }else {
+//    	         System.out.println("작성자만 삭제가 가능합니다.");
+//    	      }
+    	      
+//    	      게시글 전체 조회
+//    	      boardDAO.selectAll().stream().map(BoardDTO::toString).forEach(System.out::println);
+
    }
 }
 
