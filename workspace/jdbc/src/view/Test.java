@@ -67,7 +67,5 @@ public class Test {
 //			System.out.println(arData.get(i));
 //		}
 	
-		String result = userDAO.recomendForOther(userVO);
-		System.out.println(result);
 	}
 }

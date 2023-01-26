@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import domain.UserVO;
 
 public class UserDAO {
-
+//	암호화용 키
 	final int KEY = 9;
 	
 	public Connection connection; //연결 객체
@@ -390,18 +390,34 @@ public class UserDAO {
 		return result;
 	}
 //	나를 추천한 사람
-	public ArrayList<String> recomendForMe(UserVO userVO) {
-		String query ="SELECT USER_NAME FROM TBL_USER WHERE USER_RECOMMENDER_ID = ?";
-		ArrayList<String> arData = null;
+	public ArrayList<UserVO> recomendForMe(UserVO userVO) {
+		String query =
+				"SELECT USER_ID, USER_IDENTIFICATION, USER_NAME, USER_PASSWORD,"
+				+ " USER_PHONE, USER_NICKNAME, USER_EMAIL, USER_ADDRESS, USER_BIRTH, "
+				+ "USER_GENDER, USER_RECOMMENDER_ID "
+				+ "FROM TBL_USER WHERE USER_RECOMMENDER_ID = ?";
+		ArrayList<UserVO> arData = null;
+		UserVO user = null;
 		connection = DBConnecter.getConnection();
-		
 		try {
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, userVO.getUserIdentification());
 			resultSet = preparedStatement.executeQuery();
-			arData = new ArrayList<String>();
+			arData = new ArrayList<UserVO>();
 			while(resultSet.next()) {
-				arData.add(resultSet.getString(1));
+				user = new UserVO();
+				user.setUserId(resultSet.getLong(1));
+				user.setUserIdentification(resultSet.getString(2));
+				user.setUserName(resultSet.getString(3));
+				user.setUserPassword(resultSet.getString(4));
+				user.setUserPhone(resultSet.getString(5));
+				user.setUserNickname(resultSet.getString(6));
+				user.setUserEmail(resultSet.getString(7));
+				user.setUserAddress(resultSet.getString(8));
+				user.setUserBirth(resultSet.getString(9));
+				user.setUserGender(resultSet.getString(10));
+				user.setUserRecommenderId(resultSet.getString(11));
+				arData.add(user);
 			}
 			
 		} catch (SQLException e) {
@@ -427,19 +443,36 @@ public class UserDAO {
 		
 		return arData;
 	}
+	
 //	내가 추천한 사람
-	public String recomendForOther(UserVO userVO) {
-		String query ="SELECT USER_RECOMMENDER_ID FROM TBL_USER WHERE USER_IDENTIFICATION = ?";
+	public UserVO recomendForOther(UserVO userVO) {
+		String query ="SELECT USER_ID, USER_IDENTIFICATION, USER_NAME, USER_PASSWORD,"
+				+ " USER_PHONE, USER_NICKNAME, USER_EMAIL, USER_ADDRESS, USER_BIRTH, "
+				+ "USER_GENDER, USER_RECOMMENDER_ID "
+				+ "FROM TBL_USER WHERE USER_RECOMMENDER_ID = ? AND USER_ID = ?";
 		connection = DBConnecter.getConnection();
-		String result = null;
-		
+		UserVO user = null;
 		try {
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, userVO.getUserIdentification());
+			preparedStatement.setLong(2, userVO.getUserId());
 			resultSet = preparedStatement.executeQuery();
 			
 			resultSet.next();
-			result = resultSet.getString(1);
+			while(resultSet.next()) {
+				user = new UserVO();
+				user.setUserId(resultSet.getLong(1));
+				user.setUserIdentification(resultSet.getString(2));
+				user.setUserName(resultSet.getString(3));
+				user.setUserPassword(resultSet.getString(4));
+				user.setUserPhone(resultSet.getString(5));
+				user.setUserNickname(resultSet.getString(6));
+				user.setUserEmail(resultSet.getString(7));
+				user.setUserAddress(resultSet.getString(8));
+				user.setUserBirth(resultSet.getString(9));
+				user.setUserGender(resultSet.getString(10));
+				user.setUserRecommenderId(resultSet.getString(11));
+			}
 			
 		} catch (SQLException e) {
 			System.out.println("recomendForMe(userVO) SQL문 오류");
@@ -462,7 +495,7 @@ public class UserDAO {
 			}
 		}
 		
-		return result;
+		return user;
 		
 	}
 }
