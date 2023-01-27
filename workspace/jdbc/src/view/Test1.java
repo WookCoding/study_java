@@ -1,12 +1,14 @@
 package view;
 
 import dao.BoardDAO;
+import dao.ReplyDAO;
+import dao.UserDAO;
 import dao.UserDAO1;
-import domain.UserVO1;
+import domain.BoardDTO;
 
 public class Test1 {
    public static void main(String[] args) {
-      UserDAO1 userDAO = new UserDAO1();
+//      UserDAO userDAO = new UserDAO();
 //      if(userDAO.checkId("hds1234")) {
 //         System.out.println("사용 가능한 아이디");
 //         return;
@@ -18,7 +20,7 @@ public class Test1 {
       
 //      [실습] 메소드 전체 검증
 //      회원가입
-      UserVO1 userVO = new UserVO1();
+//      UserVO userVO = new UserVO();
 //      userVO.setUserIdentification("lss1234");
 //      userVO.setUserName("이순신");
 //      userVO.setUserPassword("1234");
@@ -51,7 +53,7 @@ public class Test1 {
 //      }
       
 //      로그인
-//      if(userDAO1.login("lss1234", "1234")) {
+//      if(userDAO.login("lss1234", "1234")) {
 //         System.out.println("로그인 성공");
 //         System.out.println(UserDAO.userId);
 //      }else {
@@ -76,13 +78,13 @@ public class Test1 {
       
 //      회원정보 수정
 //      user.setUserNickname("거북왕");
-//      userDAO1.update(user);
+//      userDAO.update(user);
       
 //      추천 수
 //      System.out.println(userDAO.getCountOfRecommenderId("jbg1234"));
       
 //      나를 추천한 사람
-//      userDAO1.selectRecommenders().stream().map(UserVO::toString).forEach(System.out::println);
+//      userDAO.selectRecommenders().stream().map(UserVO::toString).forEach(System.out::println);
       
 //      내가 추천한 사람
       
@@ -92,7 +94,7 @@ public class Test1 {
 //      }else {
 //         System.out.println("로그인 실패");
 //      }
-//      
+      
 //      UserVO user = userDAO.getMyRecommender();
 //      if(user != null) {
 //         System.out.println(user);
@@ -100,47 +102,82 @@ public class Test1 {
 //      }else {
 //         System.out.println("추천한 사람이 없습니다.");
 //      }
+      
+//      회원 탈퇴
+//      userDAO.delete();
 //      ==========================================================================
-    	      BoardDAO boardDAO = new BoardDAO();
-    	      
-//    	      게시글 추가
-//    	      BoardVO boardVO = new BoardVO();
-//    	      
-//    	      if(userDAO1.login("phgs1234", "7890")) {
-//    	         System.out.println("로그인 성공");
-//    	         System.out.println(UserDAO.userId);
-//    	      }else {
-//    	         System.out.println("로그인 실패");
-//    	      }
-//    	      
-//    	      boardVO.setBoardTitle("알에서 태어나");
-//    	      boardVO.setBoardContent("왕으로 강림하다.");
-//    	      boardVO.setUserId(UserDAO1.userId);
-//    	      
-//    	      boardDAO.insert(boardVO);
-    	      
-//    	      게시글 조회
-//    	      System.out.println(boardDAO.select(1L));
-//    	      BoardDTO boardDTO = boardDAO.select(2L);
-    	      
-//    	      게시글 수정
-//    	      if(UserDAO1.userId == boardDTO.getUserId()) {
-//    	         boardDTO.setBoardTitle("수정된 제목");
-//    	         boardDAO.update(boardDTO.toBoardVO());
-//    	      }else {
-//    	         System.out.println("작성자만 수정이 가능합니다.");
-//    	      }
-    	      
-//    	      게시글 삭제
-//    	      if(UserDAO1.userId == boardDTO.getUserId()) {
-//    	         boardDAO.delete(boardDTO.getBoardId());
-//    	      }else {
-//    	         System.out.println("작성자만 삭제가 가능합니다.");
-//    	      }
-    	      
-//    	      게시글 전체 조회
-//    	      boardDAO.selectAll().stream().map(BoardDTO::toString).forEach(System.out::println);
-
+//      BoardDAO boardDAO = new BoardDAO();
+      
+//      게시글 추가
+//      BoardVO boardVO = new BoardVO();
+//      
+//      if(userDAO.login("phgs1234", "7890")) {
+//         System.out.println("로그인 성공");
+//         System.out.println(UserDAO.userId);
+//      }else {
+//         System.out.println("로그인 실패");
+//      }
+//      
+//      boardVO.setBoardTitle("알에서 태어나");
+//      boardVO.setBoardContent("왕으로 강림하다.");
+//      boardVO.setUserId(UserDAO.userId);
+//      
+//      boardDAO.insert(boardVO);
+      
+//      게시글 조회
+//      System.out.println(boardDAO.select(1L));
+//      BoardDTO boardDTO = boardDAO.select(2L);
+      
+//      게시글 수정
+//      if(UserDAO.userId == boardDTO.getUserId()) {
+//         boardDTO.setBoardTitle("수정된 제목");
+//         boardDAO.update(boardDTO.toBoardVO());
+//      }else {
+//         System.out.println("작성자만 수정이 가능합니다.");
+//      }
+      
+//      게시글 삭제
+//      if(UserDAO.userId == boardDTO.getUserId()) {
+//         boardDAO.delete(boardDTO.getBoardId());
+//      }else {
+//         System.out.println("작성자만 삭제가 가능합니다.");
+//      }
+      
+//      게시글 전체 조회
+//      boardDAO.selectAll().stream().map(BoardDTO::toString).forEach(System.out::println);
+//      ==========================================================================
+      UserDAO1 userDAO = new UserDAO1();
+      BoardDAO boardDAO = new BoardDAO();
+      ReplyDAO replyDAO = new ReplyDAO();
+      
+      if(userDAO.login("phgs1234", "7890")) {
+         System.out.println("로그인 성공");
+      }else {
+         System.out.println("로그인 실패");
+      }
+      
+      BoardDTO boardDTO = boardDAO.select(1L);
+      System.out.println(boardDTO);
+      
+//      댓글 추가
+//      ReplyVO replyVO = new ReplyVO();
+//      replyVO.setBoardId(boardDTO.getBoardId());
+//      replyVO.setReplyContent("두번째 댓글");
+//      
+//      replyDAO.insert(replyVO);
+      
+//      대댓글 추가
+//      ReplyVO replyVO = new ReplyVO();
+//      replyVO.setBoardId(boardDTO.getBoardId());
+////      replyVO.setReplyContent("첫번째 댓글의 첫번째 대댓글");
+////      replyVO.setReplyContent("첫번째 댓글의 두번째 대댓글");
+//      replyVO.setReplyContent("두번째 댓글의 첫번째 대댓글");
+//      
+//      replyDAO.insert(replyVO, 5L);
+      
+//      댓글 전체 조회
+//      replyDAO.selectAll().stream().filter(dto -> dto.getReplyGroup() == 1).map(ReplyDTO::toString).forEach(System.out::println);
+//      replyDAO.selectAll().stream().filter(dto -> dto.getReplyGroup() == 5).map(ReplyDTO::toString).forEach(System.out::println);
    }
 }
 
