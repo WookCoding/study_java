@@ -2,25 +2,25 @@ package view;
 
 import dao.BoardDAO;
 import dao.ReplyDAO;
-import dao.UserDAO;
 import dao.UserDAO1;
 import domain.BoardDTO;
+import domain.ReplyVO;
 
 public class Test1 {
-   public static void main(String[] args) {
-//      UserDAO userDAO = new UserDAO();
+	public static void main(String[] args) {
+//      UserDAO1 userDAO = new UserDAO1();
 //      if(userDAO.checkId("hds1234")) {
 //         System.out.println("사용 가능한 아이디");
 //         return;
 //      }
 //      System.out.println("중복된 아이디");
-      
+//      
 //      System.out.println(userDAO.select(1L));
       
       
 //      [실습] 메소드 전체 검증
 //      회원가입
-//      UserVO userVO = new UserVO();
+//      UserVO1 userVO = new UserVO1();
 //      userVO.setUserIdentification("lss1234");
 //      userVO.setUserName("이순신");
 //      userVO.setUserPassword("1234");
@@ -51,7 +51,7 @@ public class Test1 {
 //      }else {
 //         System.out.println("중복된 아이디");
 //      }
-      
+//      
 //      로그인
 //      if(userDAO.login("lss1234", "1234")) {
 //         System.out.println("로그인 성공");
@@ -110,17 +110,17 @@ public class Test1 {
       
 //      게시글 추가
 //      BoardVO boardVO = new BoardVO();
-//      
-//      if(userDAO.login("phgs1234", "7890")) {
+      
+//      if(userDAO.login("lss1234", "1234")) {
 //         System.out.println("로그인 성공");
-//         System.out.println(UserDAO.userId);
+//         System.out.println(UserDAO1.userId);
 //      }else {
 //         System.out.println("로그인 실패");
 //      }
 //      
 //      boardVO.setBoardTitle("알에서 태어나");
 //      boardVO.setBoardContent("왕으로 강림하다.");
-//      boardVO.setUserId(UserDAO.userId);
+//      boardVO.setUserId(UserDAO1.userId);
 //      
 //      boardDAO.insert(boardVO);
       
@@ -149,8 +149,8 @@ public class Test1 {
       UserDAO1 userDAO = new UserDAO1();
       BoardDAO boardDAO = new BoardDAO();
       ReplyDAO replyDAO = new ReplyDAO();
-      
-      if(userDAO.login("phgs1234", "7890")) {
+//      
+      if(userDAO.login("lss1234", "1234")) {
          System.out.println("로그인 성공");
       }else {
          System.out.println("로그인 실패");
@@ -162,51 +162,37 @@ public class Test1 {
 //      댓글 추가
 //      ReplyVO replyVO = new ReplyVO();
 //      replyVO.setBoardId(boardDTO.getBoardId());
-//      replyVO.setReplyContent("두번째 댓글");
+//      replyVO.setReplyContent("첫번째 댓글");
 //      
 //      replyDAO.insert(replyVO);
       
 //      대댓글 추가
-//      ReplyVO replyVO = new ReplyVO();
+      ReplyVO replyVO = new ReplyVO();
 //      replyVO.setBoardId(boardDTO.getBoardId());
-////      replyVO.setReplyContent("첫번째 댓글의 첫번째 대댓글");
-////      replyVO.setReplyContent("첫번째 댓글의 두번째 대댓글");
+//      replyVO.setReplyContent("첫번째 댓글의 첫번째 대댓글");
+//      replyVO.setReplyContent("첫번째 댓글의 두번째 대댓글");
 //      replyVO.setReplyContent("두번째 댓글의 첫번째 대댓글");
-//      
-//      replyDAO.insert(replyVO, 5L);
+      
+//      replyDAO.insert(replyVO, 1L);
       
 //      댓글 전체 조회
 //      replyDAO.selectAll().stream().filter(dto -> dto.getReplyGroup() == 1).map(ReplyDTO::toString).forEach(System.out::println);
 //      replyDAO.selectAll().stream().filter(dto -> dto.getReplyGroup() == 5).map(ReplyDTO::toString).forEach(System.out::println);
+
+//   댓글 수정
+     replyVO.setReplyId(1L);
+     replyVO.setReplyContent("첫번째 댓글의 수정된 첫번째 대댓글");
+     
+//		대댓글 삭제
+//		replyDAO.deleteReReply(4L);
+		
+//		댓글 삭제
+//		replyDAO.deleteReply(1L);
+		
+//		댓글 수정
+//		replyDAO.selectAll().stream().filter(dto -> dto.getReplyId() == 5).map(ReplyDTO::toReplyVO).forEach(vo -> {
+//			vo.setReplyContent("수정된 댓글");
+//			replyDAO.update(vo);
+//		});
    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

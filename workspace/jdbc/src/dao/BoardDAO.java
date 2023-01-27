@@ -17,8 +17,8 @@ public class BoardDAO {
 //   게시글 추가
    public void insert(BoardVO boardVO) {
       String query = "INSERT INTO TBL_BOARD"
-            + "(BOARD_ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGISTER_DATE, BOARD_UPDATE_DATE, USER_ID) "
-            + "VALUES(SEQ_BOARD.NEXTVAL, ?, ?, SYSDATE, SYSDATE, ?)";
+            + "(BOARD_ID, BOARD_TITLE, BOARD_CONTENT, USER_ID) "
+            + "VALUES(SEQ_BOARD.NEXTVAL, ?, ?, ?)";
       connection = DBConnecter.getConnection();
       try {
          preparedStatement = connection.prepareStatement(query);
@@ -45,7 +45,7 @@ public class BoardDAO {
    }
 //   게시글 조회
    public BoardDTO select(Long boardId) {
-      String query = "SELECT BOARD_ID, BOARD_TITLE, BOARD_CONTENT, BOARD_REGISTER_DATE, "
+      String query = "SELECT BOARD_ID, BOARD_TITLE, BOARD_CONTENT, "
             + " BOARD_UPDATE_DATE, U.USER_ID, USER_IDENTIFICATION, USER_NAME, USER_PASSWORD, "
             + " USER_PHONE, USER_NICKNAME, USER_EMAIL, USER_ADDRESS, USER_BIRTH, USER_GENDER, "
             + " USER_RECOMMENDER_ID "
@@ -64,7 +64,6 @@ public class BoardDAO {
             boardDTO.setBoardId(resultSet.getLong(++index));
             boardDTO.setBoardTitle(resultSet.getString(++index));
             boardDTO.setBoardContent(resultSet.getString(++index));
-            boardDTO.setBoardRegisterDate(resultSet.getString(++index));
             boardDTO.setBoardUpdateDate(resultSet.getString(++index));
             boardDTO.setUserId(resultSet.getLong(++index));
             boardDTO.setUserIdentification(resultSet.getString(++index));
