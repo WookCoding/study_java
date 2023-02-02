@@ -43,7 +43,7 @@ public class CodingTest5 {
 		CodingTest5 c = new CodingTest5();
 		
 		int result = 0;
-		result = c.solution(25, 3);
+		result = c.solution(24, 5);
 		
 		System.out.println("°á°ú °ª : " + result);
 	}
